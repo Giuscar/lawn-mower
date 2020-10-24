@@ -9,28 +9,23 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        try {
+            List<String> lines = new InputFile("input.txt").readFile();
+            int lineSize = lines.size();
+            Coordinates lawnCoordinates = new Coordinates(lines.get(0));
+            ArrayList<Mower> mowers = new ArrayList<Mower>();
 
-        List<String> lines = new InputFile("input.txt").readFile();
-        int lineSize = lines.size();
-        Coordinates lawnCoordinates = new Coordinates(lines.get(0));
-        ArrayList<Mower> mowers = new ArrayList<Mower>();
-
-        for(int i = 1; i < lineSize; i+=2){
-            try {
+            for (int i = 1; i < lineSize; i += 2) {
                 Mower mower = new Mower(lines.get(i), lines.get(i + 1), lawnCoordinates);
                 mowers.add(mower);
-            }catch (Exception e){
-                e.printStackTrace();
             }
-        }
 
-        for(Mower mower: mowers){
-            try {
+            for (Mower mower : mowers) {
                 mower.executeCommands();
                 System.out.println(mower.getCoordinates().getX() + " " + mower.getCoordinates().getY() + " " + mower.getOrientation());
-            }catch (Exception e){
-                e.printStackTrace();
             }
+        }catch(Exception e){
+            e.printStackTrace();
         }
 
     }

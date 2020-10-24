@@ -9,6 +9,8 @@ public class Coordinates {
 
     public Coordinates(String coordinates){
         Integer[] ints = formatLawnCoordinates(coordinates);
+        if (ints[0] < 0 || ints[1] < 0)
+            throw new IllegalArgumentException("Wrong inputs");
         this.x = ints[0];
         this.y = ints[1];
     }
