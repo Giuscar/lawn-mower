@@ -19,6 +19,6 @@ public enum Command {
                 return command;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Invalid command");
     }
 }
