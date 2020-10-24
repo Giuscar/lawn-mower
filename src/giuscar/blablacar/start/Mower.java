@@ -7,7 +7,12 @@ public class Mower {
     private char[] commands;
 
     public Mower(String coordinatesAndOrientation, String commands, Coordinates lowerLeftCoordinates){
-        this.coordinates = retrieveCoordinates(coordinatesAndOrientation);
+        if (!checkLawnCoordinates(lowerLeftCoordinates)) {
+            throw new IllegalArgumentException("Invalid Arguments");
+        }
+
+        this.lawnCoordinates = lowerLeftCoordinates;
+        this.coordinates = retrieveMowerCoordinates(coordinatesAndOrientation);
         this.orientation = retrieveOrientation(coordinatesAndOrientation);
         this.commands = commands.toCharArray();
     }
@@ -20,18 +25,25 @@ public class Mower {
         return orientation;
     }
 
-    private Coordinates retrieveCoordinates(String coordinatesAndOrientation){
+    private Boolean checkLawnCoordinates(Coordinates lawnCoordinates){
+        if (lawnCoordinates.getX() > 0 && lawnCoordinates.getY() > 0)
+            return true;
+        return false;
+    }
+
+    private Coordinates retrieveMowerCoordinates(String coordinatesAndOrientation){
         String[] strings = coordinatesAndOrientation.split(" ");
         int x=0, y=0;
         if (strings.length > 2) {
             try {
                 x = Integer.parseInt(strings[0]);
                 y = Integer.parseInt(strings[1]);
+                return new Coordinates(x, y);
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid Coordinates");
+                throw new IllegalArgumentException("Error while formatting mower coordinates");
             }
         }
-        return new Coordinates(x, y);
+        throw new IllegalArgumentException("Invalid mower coordinates");
     }
 
     private Orientation retrieveOrientation(String coordinatesAndOrientation){
@@ -54,7 +66,7 @@ public class Mower {
                     this.orientation = this.orientation.rotateToRight();
                     break;
                 default:
-                    System.out.println("Wrong command");
+                    throw new IllegalArgumentException("Wrong command");
             }
         }
     }
@@ -75,5 +87,4 @@ public class Mower {
                 coordinates.setX(x - 1);
         }
     }
-
 }

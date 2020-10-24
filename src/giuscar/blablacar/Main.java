@@ -16,13 +16,22 @@ public class Main {
         ArrayList<Mower> mowers = new ArrayList<Mower>();
 
         for(int i = 1; i < lineSize; i+=2){
-            Mower mower = new Mower(lines.get(i), lines.get(i+1), lawnCoordinates);
-            mowers.add(mower);
+            try {
+                Mower mower = new Mower(lines.get(i), lines.get(i + 1), lawnCoordinates);
+                mowers.add(mower);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         for(Mower mower: mowers){
-            mower.executeCommands();
-            System.out.println(mower.getCoordinates().getX() + " " + mower.getCoordinates().getY() + " " + mower.getOrientation());
+            try {
+                mower.executeCommands();
+                System.out.println(mower.getCoordinates().getX() + " " + mower.getCoordinates().getY() + " " + mower.getOrientation());
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
+
     }
 }

@@ -66,7 +66,6 @@ public enum Orientation {
                 return orientation;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Invalid orientation argument");
     }
-
 }
