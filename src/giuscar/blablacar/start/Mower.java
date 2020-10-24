@@ -1,5 +1,7 @@
 package giuscar.blablacar.start;
 
+import giuscar.blablacar.utils.Constants;
+
 public class Mower {
 
     private Coordinates coordinates, lawnCoordinates;
@@ -34,7 +36,7 @@ public class Mower {
     private Coordinates retrieveMowerCoordinates(String coordinatesAndOrientation){
         String[] strings = coordinatesAndOrientation.split(" ");
         int x=0, y=0;
-        if (strings.length > 2) {
+        if (strings.length > Constants.NUMBER_OF_COORDINATES) {
             try {
                 x = Integer.parseInt(strings[0]);
                 y = Integer.parseInt(strings[1]);
@@ -85,6 +87,9 @@ public class Mower {
                 break;
             case W:
                 coordinates.setX(x - 1);
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong command");
         }
     }
 }
