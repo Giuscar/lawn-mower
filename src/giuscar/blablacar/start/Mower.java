@@ -28,9 +28,12 @@ public class Mower {
     }
 
     private Boolean checkLawnCoordinates(Coordinates lawnCoordinates){
+        Boolean isValidCoordinate = false;
+
         if (lawnCoordinates.getX() > 0 && lawnCoordinates.getY() > 0)
-            return true;
-        return false;
+            isValidCoordinate = true;
+
+        return isValidCoordinate;
     }
 
     private Coordinates retrieveMowerCoordinates(String coordinatesAndOrientation){
