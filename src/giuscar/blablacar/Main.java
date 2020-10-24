@@ -19,5 +19,10 @@ public class Main {
             Mower mower = new Mower(lines.get(i), lines.get(i+1), lawnCoordinates);
             mowers.add(mower);
         }
+
+        for(Mower mower: mowers){
+            mower.executeCommands();
+            System.out.println(mower.getCoordinates().getX() + " " + mower.getCoordinates().getY() + " " + mower.getOrientation());
+        }
     }
 }

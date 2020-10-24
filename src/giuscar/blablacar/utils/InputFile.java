@@ -26,6 +26,4 @@ public class InputFile {
         }
         return lines;
     }
-
-
 }

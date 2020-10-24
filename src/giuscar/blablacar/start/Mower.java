@@ -1,9 +1,8 @@
 package giuscar.blablacar.start;
 
-import java.util.Arrays;
-
 public class Mower {
-    private Coordinates coordinates;
+
+    private Coordinates coordinates, lawnCoordinates;
     private Orientation orientation;
     private char[] commands;
 
@@ -11,6 +10,14 @@ public class Mower {
         this.coordinates = retrieveCoordinates(coordinatesAndOrientation);
         this.orientation = retrieveOrientation(coordinatesAndOrientation);
         this.commands = commands.toCharArray();
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public Orientation getOrientation() {
+        return orientation;
     }
 
     private Coordinates retrieveCoordinates(String coordinatesAndOrientation){
@@ -31,4 +38,42 @@ public class Mower {
         String[] strings = coordinatesAndOrientation.split(" ");
         return Orientation.retrieveOrientationByVal(strings[2]);
     }
+
+    public void executeCommands(){
+        for(char command: commands)
+        {
+            Command c = Command.retrieveCommandByCommand(command+"");
+            switch (c){
+                case LEFT:
+                    this.orientation = this.orientation.rotateToLeft();
+                    break;
+                case FORWARD:
+                    moveToNextPosition();
+                    break;
+                case RIGHT:
+                    this.orientation = this.orientation.rotateToRight();
+                    break;
+                default:
+                    System.out.println("Wrong command");
+            }
+        }
+    }
+
+    public void moveToNextPosition(){
+        int x = coordinates.getX(), y = coordinates.getY();
+        switch (orientation){
+            case N:
+                coordinates.setY(y + 1);
+                break;
+            case S:
+                coordinates.setY(y - 1);
+                break;
+            case E:
+                coordinates.setX(x + 1);
+                break;
+            case W:
+                coordinates.setX(x - 1);
+        }
+    }
+
 }
