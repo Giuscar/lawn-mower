@@ -3,12 +3,13 @@ package giuscar.blablacar.start;
 import giuscar.blablacar.utils.InputFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Lawn {
 
     private String filename;
-    private ArrayList<Mower> mowers = new ArrayList<Mower>();
+    private List<Mower> mowers = new ArrayList<Mower>();
     private Coordinates lowerLeftCoordinates;
 
     public Lawn(String filename){
@@ -35,6 +36,10 @@ public class Lawn {
     }
 
     public void runMowers(){
-        mowers.forEach(mower -> mower.executeCommands());
+        try {
+            mowers.forEach(mower -> mower.executeCommands());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
