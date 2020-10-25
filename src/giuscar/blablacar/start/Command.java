@@ -13,7 +13,7 @@ public enum Command {
         return command;
     }
 
-    public static Command retrieveCommandByCommand(String val){
+    public static Command retrieveCommandByVal(String val){
         for (Command command : Command.values()) {
             if (command.getCommand().equals(val)) {
                 return command;

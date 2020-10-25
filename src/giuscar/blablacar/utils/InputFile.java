@@ -2,6 +2,7 @@ package giuscar.blablacar.utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,9 @@ public class InputFile {
         List<String> lines = new ArrayList<String>();
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
             lines = stream.collect(Collectors.toList());
+        } catch(NoSuchFileException e){
+            e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("An error occurred during the read of the file " + filename);
             e.printStackTrace();
         }
         return lines;

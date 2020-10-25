@@ -1,11 +1,5 @@
 package giuscar.blablacar;
-import giuscar.blablacar.start.Coordinates;
 import giuscar.blablacar.start.Lawn;
-import giuscar.blablacar.start.Mower;
-import giuscar.blablacar.utils.InputFile;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 

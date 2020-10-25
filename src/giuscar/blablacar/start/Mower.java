@@ -8,15 +8,15 @@ public class Mower {
     private Orientation orientation;
     private char[] commands;
 
-    public Mower(String coordinatesAndOrientation, String commands, Coordinates lowerLeftCoordinates){
-        if (!checkLawnCoordinates(lowerLeftCoordinates)) {
-            throw new IllegalArgumentException("Invalid Arguments");
+    public Mower(String coordinatesAndOrientation, String commands, Coordinates lawnCoordinates){
+        if (!checkLawnCoordinates(lawnCoordinates)) {
+            throw new IllegalArgumentException("Invalid lawn coordinates!");
         }
 
-        this.lawnCoordinates = lowerLeftCoordinates;
+        this.lawnCoordinates = lawnCoordinates;
+        this.commands = commands.toCharArray();
         this.coordinates = retrieveMowerCoordinates(coordinatesAndOrientation);
         this.orientation = retrieveOrientation(coordinatesAndOrientation);
-        this.commands = commands.toCharArray();
     }
 
     public Coordinates getCoordinates() {
@@ -28,12 +28,8 @@ public class Mower {
     }
 
     private Boolean checkLawnCoordinates(Coordinates lawnCoordinates){
-        Boolean isValidCoordinate = false;
 
-        if (lawnCoordinates.getX() > 0 && lawnCoordinates.getY() > 0)
-            isValidCoordinate = true;
-
-        return isValidCoordinate;
+        return lawnCoordinates.getX() > 0 && lawnCoordinates.getY() > 0;
     }
 
     private Coordinates retrieveMowerCoordinates(String coordinatesAndOrientation){
@@ -43,12 +39,21 @@ public class Mower {
             try {
                 x = Integer.parseInt(strings[0]);
                 y = Integer.parseInt(strings[1]);
-                return new Coordinates(x, y);
+                if (validateMowerCoordinates(x, y))
+                    return new Coordinates(x, y);
+
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("Error while formatting mower coordinates");
             }
         }
         throw new IllegalArgumentException("Invalid mower coordinates");
+    }
+
+    private Boolean validateMowerCoordinates(int x, int y){
+        return ( x >= 0 &&
+                x <= lawnCoordinates.getX() &&
+                y >= 0 &&
+                y <= lawnCoordinates.getY());
     }
 
     private Orientation retrieveOrientation(String coordinatesAndOrientation){
@@ -59,37 +64,47 @@ public class Mower {
     public void executeCommands(){
         for(char command: commands)
         {
-            Command c = Command.retrieveCommandByCommand(command+"");
-            switch (c){
-                case LEFT:
-                    this.orientation = this.orientation.rotateToLeft();
-                    break;
-                case FORWARD:
-                    moveToNextPosition();
-                    break;
-                case RIGHT:
-                    this.orientation = this.orientation.rotateToRight();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Wrong command");
+            try {
+                Command c = Command.retrieveCommandByVal(command + "");
+                switch (c) {
+                    case LEFT:
+                        this.orientation = this.orientation.rotateToLeft();
+                        break;
+                    case FORWARD:
+                        moveToNextPosition();
+                        break;
+                    case RIGHT:
+                        this.orientation = this.orientation.rotateToRight();
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Wrong command");
+                }
+            }catch(IllegalArgumentException e){
+                e.printStackTrace();
             }
         }
+
+        System.out.println(getCoordinates().getX() + " " + getCoordinates().getY() + " " + getOrientation());
     }
 
-    public void moveToNextPosition(){
+    private void moveToNextPosition(){
         int x = coordinates.getX(), y = coordinates.getY();
         switch (orientation){
             case N:
-                coordinates.setY(y + 1);
+                if (validateMowerCoordinates(x, y+1))
+                    coordinates.setY(y + 1);
                 break;
             case S:
-                coordinates.setY(y - 1);
+                if (validateMowerCoordinates(x, y-1))
+                    coordinates.setY(y - 1);
                 break;
             case E:
-                coordinates.setX(x + 1);
+                if (validateMowerCoordinates(x+1, y))
+                    coordinates.setX(x + 1);
                 break;
             case W:
-                coordinates.setX(x - 1);
+                if (validateMowerCoordinates(x-1, y))
+                    coordinates.setX(x - 1);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong command");
