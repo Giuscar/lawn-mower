@@ -88,7 +88,7 @@ public class Mower {
         System.out.println(getCoordinates().getX() + " " + getCoordinates().getY() + " " + getOrientation());
     }
 
-    private void moveToNextPosition(boolean[][] grid){
+    private synchronized void moveToNextPosition(boolean[][] grid){
         int x = coordinates.getX(), y = coordinates.getY();
         switch (orientation){
             case N:
@@ -113,7 +113,7 @@ public class Mower {
                 }
                 break;
             case W:
-                if (validateMowerCoordinates(x-1, y)&& !grid[x-1][y]) {
+                if (validateMowerCoordinates(x-1, y) && !grid[x-1][y]) {
                     grid[x][y] = false;
                     grid[x-1][y] = true;
                     coordinates.setX(x - 1);
