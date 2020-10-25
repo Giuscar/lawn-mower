@@ -74,6 +74,7 @@ public class Mower {
                     throw new IllegalArgumentException("Wrong command");
             }
         }
+        System.out.println(getCoordinates().getX() + " " + getCoordinates().getY() + " " + getOrientation().getVal());
     }
 
     public void moveToNextPosition(){
