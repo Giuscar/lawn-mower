@@ -8,6 +8,7 @@ public class Lawn {
 
     private List<Mower> mowers = new ArrayList<Mower>();
     private Coordinates lowerLeftCoordinates;
+    private boolean[][] grid;
 
     public Lawn(String filename){
         if (filename.isEmpty())
@@ -21,6 +22,7 @@ public class Lawn {
             throw new IllegalArgumentException("Invalid lawn coordinates!");
 
         this.lowerLeftCoordinates = lawnCoordinates;
+        createGrid();
 
         for (int i = 1; i < lineSize; i += 2) {
             try {
@@ -35,7 +37,7 @@ public class Lawn {
 
     public void runMowers(){
         try {
-            mowers.forEach(mower -> mower.executeCommands());
+            mowers.forEach(mower -> mower.executeCommands(grid));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -43,5 +45,15 @@ public class Lawn {
 
     public List<Mower> getMowers() {
         return mowers;
+    }
+
+    public boolean[][] createGrid(){
+        grid = new boolean[lowerLeftCoordinates.getX()+1][lowerLeftCoordinates.getY()+1];
+        for (int i = 0; i < lowerLeftCoordinates.getX(); i++){
+            for(int j = 0; j < lowerLeftCoordinates.getY(); j++){
+                grid[i][j] = false;
+            }
+        }
+        return grid;
     }
 }

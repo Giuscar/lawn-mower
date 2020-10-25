@@ -10,8 +10,15 @@ class MowerTest {
     void executeCommands() {
 
         //Use case 1: the mower will stop at position 1 4 N
+        boolean[][] grid = new boolean[6][6];
+        for (int i = 0; i < 5; i ++){
+            for (int j = 0; j < 5; j++)
+                grid[i][j] = false;
+        }
+        grid[1][2] = true;
+
         Mower mower_case_1 = new Mower("1 2 N", "FFFFFFFFFFFFF", new Coordinates(5,5));
-        mower_case_1.executeCommands();
+        mower_case_1.executeCommands(grid);
         assertEquals(mower_case_1.getCoordinates().getX(), 1);
         assertEquals(mower_case_1.getCoordinates().getY(), 5);
         assertEquals(mower_case_1.getOrientation(), Orientation.N);

@@ -62,7 +62,7 @@ public class Mower {
         );
     }
 
-    public void executeCommands(){
+    public void executeCommands(boolean[][] grid){
         for(char command: commands)
         {
             try {
@@ -72,7 +72,7 @@ public class Mower {
                         this.orientation = this.orientation.rotateToLeft();
                         break;
                     case FORWARD:
-                        moveToNextPosition();
+                        moveToNextPosition(grid);
                         break;
                     case RIGHT:
                         this.orientation = this.orientation.rotateToRight();
@@ -88,24 +88,36 @@ public class Mower {
         System.out.println(getCoordinates().getX() + " " + getCoordinates().getY() + " " + getOrientation());
     }
 
-    private void moveToNextPosition(){
+    private void moveToNextPosition(boolean[][] grid){
         int x = coordinates.getX(), y = coordinates.getY();
         switch (orientation){
             case N:
-                if (validateMowerCoordinates(x, y+1))
+                if (validateMowerCoordinates(x, y+1) && !grid[x][y+1]) {
+                    grid[x][y] = false;
+                    grid[x][y+1] = true;
                     coordinates.setY(y + 1);
+                }
                 break;
             case S:
-                if (validateMowerCoordinates(x, y-1))
+                if (validateMowerCoordinates(x, y-1) && !grid[x][y - 1]) {
+                    grid[x][y] = false;
+                    grid[x][y-1] = true;
                     coordinates.setY(y - 1);
+                }
                 break;
             case E:
-                if (validateMowerCoordinates(x+1, y))
+                if (validateMowerCoordinates(x+1, y) && !grid[x+1][y]) {
+                    grid[x][y] = false;
+                    grid[x+1][y] = true;
                     coordinates.setX(x + 1);
+                }
                 break;
             case W:
-                if (validateMowerCoordinates(x-1, y))
+                if (validateMowerCoordinates(x-1, y)&& !grid[x-1][y]) {
+                    grid[x][y] = false;
+                    grid[x-1][y] = true;
                     coordinates.setX(x - 1);
+                }
                 break;
             default:
                 throw new IllegalArgumentException("Wrong command");
