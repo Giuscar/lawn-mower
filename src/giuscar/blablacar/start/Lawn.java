@@ -38,7 +38,7 @@ public class Lawn {
 
     public void runMowers(){
         try {
-            mowers.forEach(mower -> mower.executeCommands(grid));
+            mowers.parallelStream().forEach(mower -> mower.executeCommands(grid));
         }catch (Exception e){
             e.printStackTrace();
         }
