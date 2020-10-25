@@ -57,8 +57,9 @@ public class Mower {
     }
 
     private Orientation retrieveOrientation(String coordinatesAndOrientation){
-        String[] strings = coordinatesAndOrientation.split(" ");
-        return Orientation.retrieveOrientationByVal(strings[2]);
+        return Orientation.retrieveOrientationByVal(
+                coordinatesAndOrientation.split(" ")[2]
+        );
     }
 
     public void executeCommands(){
