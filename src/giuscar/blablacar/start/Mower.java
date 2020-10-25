@@ -8,7 +8,13 @@ public class Mower {
     private Orientation orientation;
     private char[] commands;
 
+    /**
+     * @param coordinatesAndOrientation
+     * @param commands
+     * @param lawnCoordinates
+     */
     public Mower(String coordinatesAndOrientation, String commands, Coordinates lawnCoordinates){
+        //If the coordinates don't respect the requirements, an IllegalArgumentException si thrown.
         if (!checkLawnCoordinates(lawnCoordinates)) {
             throw new IllegalArgumentException("Invalid lawn coordinates!");
         }
@@ -19,22 +25,39 @@ public class Mower {
         this.orientation = retrieveOrientation(coordinatesAndOrientation);
     }
 
+    /**
+     * @return coordinates
+     */
     public Coordinates getCoordinates() {
         return coordinates;
     }
 
+    /**
+     * @return orientation
+     */
     public Orientation getOrientation() {
         return orientation;
     }
 
-    private Boolean checkLawnCoordinates(Coordinates lawnCoordinates){
-
-        return lawnCoordinates.getX() > 0 && lawnCoordinates.getY() > 0;
+    /**
+     * @param lawnCoordinates
+     * @return
+     */
+    private boolean checkLawnCoordinates(Coordinates lawnCoordinates){
+        return (lawnCoordinates.getX() >= 0 &&
+                lawnCoordinates.getY() >= 0);
     }
 
+    /**
+     * @param coordinatesAndOrientation
+     * @return
+     */
     private Coordinates retrieveMowerCoordinates(String coordinatesAndOrientation){
         String[] strings = coordinatesAndOrientation.split(" ");
         int x=0, y=0;
+
+        /*If the number of elements is bigger than one defined in the constant
+           NUMBER_OF_COORDINATES, it means the input file is wrong.*/
         if (strings.length > Constants.NUMBER_OF_COORDINATES) {
             try {
                 x = Integer.parseInt(strings[0]);
@@ -49,19 +72,33 @@ public class Mower {
         throw new IllegalArgumentException("Invalid mower coordinates");
     }
 
-    private Boolean validateMowerCoordinates(int x, int y){
+    /**
+     * Checks the requirements are respected for mower coordinates.
+     * @param x
+     * @param y
+     * @return boolean
+     */
+    private boolean validateMowerCoordinates(int x, int y){
         return ( x >= 0 &&
                 x <= lawnCoordinates.getX() &&
                 y >= 0 &&
                 y <= lawnCoordinates.getY());
     }
 
+    /**
+     * @param coordinatesAndOrientation
+     * @return string
+     */
     private Orientation retrieveOrientation(String coordinatesAndOrientation){
         return Orientation.retrieveOrientationByVal(
                 coordinatesAndOrientation.split(" ")[2]
         );
     }
 
+    /**
+     * Excution of the commands for one mower only.
+     * @param grid
+     */
     public void executeCommands(boolean[][] grid){
         for(char command: commands)
         {
@@ -88,6 +125,12 @@ public class Mower {
         System.out.println(getCoordinates().getX() + " " + getCoordinates().getY() + " " + getOrientation());
     }
 
+    /**
+     * Moving the mower to the next position based on its orientation. It's synchronized method,
+     * because the grid matrix is modified into this method in case the mower will move to the next
+     * position.
+     * @param grid
+     */
     private synchronized void moveToNextPosition(boolean[][] grid){
         int x = coordinates.getX(), y = coordinates.getY();
         switch (orientation){

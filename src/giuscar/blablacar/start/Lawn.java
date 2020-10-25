@@ -10,19 +10,30 @@ public class Lawn {
     private Coordinates lowerLeftCoordinates;
     private boolean[][] grid;
 
+    /**
+     * @param filename
+     */
     public Lawn(String filename){
         if (filename.isEmpty())
             throw new IllegalArgumentException("Invalid argument!");
 
         List<String> lines = new InputFile(filename).readFile();
         int lineSize = lines.size();
+
         Coordinates lawnCoordinates = new Coordinates(lines.get(0));
         if (lawnCoordinates.getX() < 0 || lawnCoordinates.getY() < 0)
             throw new IllegalArgumentException("Invalid lawn coordinates!");
 
         this.lowerLeftCoordinates = lawnCoordinates;
+
+        /*The grid is a boolean matrix and its scope is to keep track the position of each
+          mower. This grid is updated accordingly to the list of commands executed from each mower.
+          The grid contains two possible values:
+          1 - True: the position (x,y) is owned by a mower.
+          2 - False: the position (x,y) is free.*/
         createGrid();
 
+        // Once the coordinates have been retrieved, a list of mower is created.
         for (int i = 1; i < lineSize; i += 2) {
             try {
                 if (i+1 < lineSize && lines.get(i+1) != null) {
@@ -48,7 +59,11 @@ public class Lawn {
         return mowers;
     }
 
-    public boolean[][] createGrid(){
+    /**
+     * Instantiating the grid matrix and setting it to false.
+     * @return boolean[][]
+     */
+    private boolean[][] createGrid(){
         grid = new boolean[lowerLeftCoordinates.getX()+1][lowerLeftCoordinates.getY()+1];
         for (int i = 0; i < lowerLeftCoordinates.getX(); i++){
             for(int j = 0; j < lowerLeftCoordinates.getY(); j++){

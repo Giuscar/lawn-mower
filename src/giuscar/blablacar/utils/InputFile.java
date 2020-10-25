@@ -13,10 +13,17 @@ public class InputFile {
 
     private String filename;
 
+    /**
+     * @param filename
+     */
     public InputFile(String filename){
         this.filename = filename;
     }
 
+    /**
+     * Reading the file and returning the list containing all the lines in the file.
+     * @return List<String>
+     */
     public List<String> readFile(){
         List<String> lines = new ArrayList<String>();
         try (Stream<String> stream = Files.lines(Paths.get(filename))) {
