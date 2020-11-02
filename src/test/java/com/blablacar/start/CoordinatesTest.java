@@ -50,7 +50,7 @@ class CoordinatesTest {
         assertThrows(
                 IllegalArgumentException.class,
                 () ->coordinate.setY(-1),
-                "Wrong X coordinate"
+                "Wrong Y coordinate"
         );
 
         assertEquals(coordinate.getY(), 1);
