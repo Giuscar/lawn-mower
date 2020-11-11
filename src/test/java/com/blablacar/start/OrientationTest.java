@@ -5,14 +5,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrientationTest {
+    private Orientation expectedOrientation, returnedOrientation;
 
     @Test
     void rotateToLeft() {
+
         //Rotation to left: N->W
-        assertEquals(Orientation.retrieveOrientationByVal("N").rotateToLeft(), Orientation.W);
+        expectedOrientation = Orientation.W;
+        returnedOrientation = Orientation.retrieveOrientationByVal("N").rotateToLeft();
+        assertEquals(returnedOrientation, expectedOrientation);
 
         //Rotation to left: W->S
-        assertEquals(Orientation.retrieveOrientationByVal("W").rotateToLeft(), Orientation.S);
+        expectedOrientation = Orientation.S;
+        returnedOrientation = Orientation.retrieveOrientationByVal("W").rotateToLeft();
+        assertEquals(returnedOrientation, Orientation.S);
 
         //Wrong orientation value:
         assertThrows(
@@ -25,10 +31,14 @@ class OrientationTest {
     @Test
     void rotateToRight() {
         //Rotation to right: N->E
-        assertEquals(Orientation.retrieveOrientationByVal("N").rotateToRight(), Orientation.E);
+        expectedOrientation = Orientation.E;
+        returnedOrientation = Orientation.retrieveOrientationByVal("N").rotateToRight();
+        assertEquals(returnedOrientation, expectedOrientation);
 
         //Rotation to right: W->N
-        assertEquals(Orientation.retrieveOrientationByVal("W").rotateToRight(), Orientation.N);
+        expectedOrientation = Orientation.N;
+        returnedOrientation = Orientation.retrieveOrientationByVal("W").rotateToRight();
+        assertEquals(returnedOrientation, expectedOrientation);
 
         //Wrong orientation value:
         assertThrows(
@@ -41,8 +51,8 @@ class OrientationTest {
     @Test
     void getVal() {
         //Successful use case
-        Orientation expectedOrientation = Orientation.N;
-        Orientation returnedOrientation = Orientation.retrieveOrientationByVal("N");
+        expectedOrientation = Orientation.N;
+        returnedOrientation = Orientation.retrieveOrientationByVal("N");
         assertEquals(expectedOrientation.getVal(), returnedOrientation.getVal());
 
         //Failure use case
@@ -56,8 +66,8 @@ class OrientationTest {
     @Test
     void retrieveOrientationByVal() {
         //Successful use case
-        Orientation expectedOrientation = Orientation.N;
-        Orientation returnedOrientation = Orientation.retrieveOrientationByVal("N");
+        expectedOrientation = Orientation.N;
+        returnedOrientation = Orientation.retrieveOrientationByVal("N");
         assertEquals(expectedOrientation, returnedOrientation);
 
         //Failure use case

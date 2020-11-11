@@ -5,12 +5,13 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandTest {
+    private Command expectedCommand, returnedCommand;
 
     @Test
     void getCommand() {
         //Successful use case
-        Command expectedCommand = Command.LEFT;
-        Command returnedCommand = Command.retrieveCommandByVal("L");
+        expectedCommand = Command.LEFT;
+        returnedCommand = Command.retrieveCommandByVal("L");
         assertEquals(expectedCommand.getCommand(), returnedCommand.getCommand());
 
         //Failure use case
@@ -24,8 +25,8 @@ class CommandTest {
     @Test
     void retrieveCommandByVal() {
         //Successful use case
-        Command expectedCommand = Command.LEFT;
-        Command returnedCommand = Command.retrieveCommandByVal("L");
+        expectedCommand = Command.LEFT;
+        returnedCommand = Command.retrieveCommandByVal("L");
         assertEquals(expectedCommand, returnedCommand);
 
         //Failure use case

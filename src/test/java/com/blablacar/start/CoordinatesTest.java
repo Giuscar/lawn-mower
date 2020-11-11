@@ -6,22 +6,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CoordinatesTest {
 
+    private Coordinates coordinate;
+    CoordinatesTest(){
+        coordinate = new Coordinates(1, 1);
+    }
+
     @Test
     void setX() {
-        Coordinates coordinate = new Coordinates(1, 1);
-
         //Passing negative X coordinates
         assertThrows(
                 IllegalArgumentException.class,
                 () ->coordinate.setX(-1),
                 "Wrong X coordinate"
         );
-
     }
 
     @Test
     void setY() {
-        Coordinates coordinate = new Coordinates(1, 1);
         //Passing Wrong Y coordinates
         assertThrows(
                 IllegalArgumentException.class,
@@ -32,7 +33,6 @@ class CoordinatesTest {
 
     @Test
     void getX() {
-        Coordinates coordinate = new Coordinates(1, 1);
         //Verify the value is unchanged after having set up a negative X coordinate.
         assertThrows(
                 IllegalArgumentException.class,
@@ -45,7 +45,6 @@ class CoordinatesTest {
 
     @Test
     void getY() {
-        Coordinates coordinate = new Coordinates(1, 1);
         //Verify the value is unchanged after having set up a negative Y coordinate.
         assertThrows(
                 IllegalArgumentException.class,
