@@ -121,8 +121,6 @@ public class Mower {
                 e.printStackTrace();
             }
         }
-
-        System.out.println(getCoordinates().getX() + " " + getCoordinates().getY() + " " + getOrientation());
     }
 
     /**
@@ -165,5 +163,9 @@ public class Mower {
             default:
                 throw new IllegalArgumentException("Wrong command");
         }
+    }
+
+    public String getFormattedPosition(){
+        return getCoordinates().getX() + " " + getCoordinates().getY() + " " + getOrientation();
     }
 }

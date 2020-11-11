@@ -49,7 +49,10 @@ public class Lawn {
 
     public void runMowers(){
         try {
-            mowers.parallelStream().forEach(mower -> mower.executeCommands(grid));
+            mowers.parallelStream().forEach(mower -> {
+                mower.executeCommands(grid);
+                System.out.println(mower.getFormattedPosition());
+            });
         }catch (Exception e){
             e.printStackTrace();
         }
