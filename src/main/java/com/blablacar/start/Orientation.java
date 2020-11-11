@@ -1,6 +1,6 @@
 package com.blablacar.start;
 /**
- * This enum class represents the list of possible mower orientations (N, S, E, O).
+ * This enum class represents the list of possible mower orientations (N, S, E, W).
  * Based on its orientation, two possible rotations can be executed:
  * - rotateToLeft
  * - rotateToRight
@@ -23,9 +23,7 @@ public enum Orientation {
         }
 
         @Override
-        public Orientation rotateToRight() {
-            return Orientation.W;
-        }
+        public Orientation rotateToRight() { return Orientation.W; }
     }, E("E"){
         @Override
         public Orientation rotateToLeft(){

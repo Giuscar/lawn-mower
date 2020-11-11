@@ -79,7 +79,7 @@ public class Mower {
      * @return boolean
      */
     private boolean validateMowerCoordinates(int x, int y){
-        return ( x >= 0 &&
+        return (x >= 0 &&
                 x <= lawnCoordinates.getX() &&
                 y >= 0 &&
                 y <= lawnCoordinates.getY());
