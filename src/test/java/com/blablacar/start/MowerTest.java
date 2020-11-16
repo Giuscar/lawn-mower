@@ -5,23 +5,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MowerTest {
+    private Mower mower;
+    private boolean[][] grid;
+
+    MowerTest(){
+        mower = new Mower("1 2 N", "FFFFFFFFFFFFF", new Coordinates(5,5));
+        grid = initGrid();
+    }
 
     @Test
     void executeCommands() {
 
-        //Use case 1: the mower will stop at position 1 4 N
-        boolean[][] grid = new boolean[6][6];
-        for (int i = 0; i < 5; i ++){
-            for (int j = 0; j < 5; j++)
-                grid[i][j] = false;
-        }
-        grid[1][2] = true;
-
-        Mower mower_case_1 = new Mower("1 2 N", "FFFFFFFFFFFFF", new Coordinates(5,5));
-        mower_case_1.executeCommands(grid);
-        assertEquals(mower_case_1.getCoordinates().getX(), 1);
-        assertEquals(mower_case_1.getCoordinates().getY(), 5);
-        assertEquals(mower_case_1.getOrientation(), Orientation.N);
+        mower.executeCommands(grid);
+        assertEquals(mower.getCoordinates().getX(), 1);
+        assertEquals(mower.getCoordinates().getY(), 5);
+        assertEquals(mower.getOrientation(), Orientation.N);
 
         //Use case 2: exception x lawn coordinates.
         assertThrows(
@@ -50,6 +48,26 @@ class MowerTest {
                 () -> new Mower("1 2 N", "FFFFFFFFFFFFF", new Coordinates(-90,90)),
                 "Invalid lawn coordinates!"
         );
+    }
 
+    @Test
+    void getFormattedPosition()
+    {
+        String expectedString = "1 2 N";
+        String stringToPrint = mower.getFormattedPosition();
+        assertEquals(expectedString.length(), stringToPrint.length());
+        assertEquals(expectedString, stringToPrint);
+    }
+
+
+    private boolean[][] initGrid() {
+        boolean[][] grid = new boolean[6][6];
+        for (int i = 0; i < 5; i ++){
+            for (int j = 0; j < 5; j++)
+                grid[i][j] = false;
+        }
+        grid[1][2] = true;
+
+        return grid;
     }
 }
