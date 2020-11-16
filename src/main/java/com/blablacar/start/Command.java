@@ -1,4 +1,7 @@
 package com.blablacar.start;
+
+import java.util.Arrays;
+
 /**
  * This enum class has the scope to represent the list of commands in order to move
  * the mower.
@@ -35,6 +38,7 @@ public enum Command {
                 return command;
             }
         }
+
         throw new IllegalArgumentException("Invalid command");
     }
 }
