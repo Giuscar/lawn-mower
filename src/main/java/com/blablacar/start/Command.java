@@ -1,6 +1,7 @@
 package com.blablacar.start;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * This enum class has the scope to represent the list of commands in order to move
@@ -33,11 +34,13 @@ public enum Command {
      * @return Command
      */
     public static Command retrieveCommandByVal(String val){
-        for (Command command : Command.values()) {
-            if (command.getCommand().equals(val)) {
-                return command;
-            }
-        }
+
+        Optional<Command> command = Arrays.stream(Command.values())
+                .filter(c -> c.getCommand().equals(val))
+                .findFirst();
+
+        if (command.isPresent())
+            return command.get();
 
         throw new IllegalArgumentException("Invalid command");
     }
