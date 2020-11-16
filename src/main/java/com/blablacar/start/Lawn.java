@@ -7,8 +7,9 @@ import java.util.List;
 public class Lawn {
 
     private List<Mower> mowers = new ArrayList<Mower>();
-    private Coordinates lowerLeftCoordinates;
+    private Coordinates lowerLeftCoordinates, lawnCoordinates;
     private boolean[][] grid;
+    private List<String> lines;
 
     /**
      * @param filename
@@ -17,10 +18,9 @@ public class Lawn {
         if (filename.isEmpty())
             throw new IllegalArgumentException("Invalid argument!");
 
-        List<String> lines = new InputFile(filename).readFile();
-        int lineSize = lines.size();
+        lines = new InputFile(filename).readFile();
 
-        Coordinates lawnCoordinates = new Coordinates(lines.get(0));
+        lawnCoordinates = new Coordinates(lines.get(0));
         if (lawnCoordinates.getX() < 0 || lawnCoordinates.getY() < 0)
             throw new IllegalArgumentException("Invalid lawn coordinates!");
 
@@ -34,22 +34,15 @@ public class Lawn {
         createGrid();
 
         // Once the coordinates have been retrieved, a list of mower is created.
-        for (int i = 1; i < lineSize; i += 2) {
-            try {
-                if (i+1 < lineSize && lines.get(i+1) != null) {
-                    Mower mower = new Mower(lines.get(i), lines.get(i + 1), lawnCoordinates);
-                    this.mowers.add(mower);
-                }
-            }
-            catch(IllegalArgumentException e){
-                e.printStackTrace();
-            }
-        }
+        createMowers();
     }
 
     public void runMowers(){
         try {
-            mowers.parallelStream().forEach(mower -> mower.executeCommands(grid));
+            mowers.parallelStream().forEach(mower -> {
+                mower.executeCommands(grid);
+                System.out.println(mower.getFormattedPosition());
+            });
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -71,5 +64,20 @@ public class Lawn {
             }
         }
         return grid;
+    }
+
+    private void createMowers(){
+        int lineSize = lines.size();
+        for (int i = 1; i < lineSize; i += 2) {
+            try {
+                if (i+1 < lineSize && lines.get(i+1) != null) {
+                    Mower mower = new Mower(lines.get(i), lines.get(i + 1), lawnCoordinates);
+                    this.mowers.add(mower);
+                }
+            }
+            catch(IllegalArgumentException e){
+                e.printStackTrace();
+            }
+        }
     }
 }
