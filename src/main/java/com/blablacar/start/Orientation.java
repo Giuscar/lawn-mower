@@ -1,4 +1,8 @@
 package com.blablacar.start;
+
+import java.util.Arrays;
+import java.util.Optional;
+
 /**
  * This enum class represents the list of possible mower orientations (N, S, E, W).
  * Based on its orientation, two possible rotations can be executed:
@@ -76,11 +80,14 @@ public enum Orientation {
      * @return Orientation
      */
     public static Orientation retrieveOrientationByVal(String val){
-        for (Orientation orientation : Orientation.values()) {
-            if (orientation.getVal().equals(val)) {
-                return orientation;
-            }
-        }
+
+        Optional<Orientation> orientation = Arrays.stream(Orientation.values())
+                .filter(c -> c.getVal().equals(val))
+                .findFirst();
+
+        if (orientation.isPresent())
+            return orientation.get();
+
         throw new IllegalArgumentException("Invalid orientation argument");
     }
 }

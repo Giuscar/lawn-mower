@@ -57,9 +57,9 @@ public class Lawn {
      * @return boolean[][]
      */
     private boolean[][] createGrid(){
-        grid = new boolean[lowerLeftCoordinates.getX()][lowerLeftCoordinates.getY()];
-        for (int i = 0; i < lowerLeftCoordinates.getX(); i++){
-            for(int j = 0; j < lowerLeftCoordinates.getY(); j++){
+        grid = new boolean[lowerLeftCoordinates.getX()+1][lowerLeftCoordinates.getY()+1];
+        for (int i = 0; i <= lowerLeftCoordinates.getX(); i++){
+            for(int j = 0; j <= lowerLeftCoordinates.getY(); j++){
                 grid[i][j] = false;
             }
         }
