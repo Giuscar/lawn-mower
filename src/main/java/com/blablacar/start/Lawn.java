@@ -52,10 +52,6 @@ public class Lawn {
         return mowers;
     }
 
-    /**
-     * Instantiating the grid matrix and setting it to false.
-     * @return boolean[][]
-     */
     private boolean[][] createGrid(){
         grid = new boolean[lowerLeftCoordinates.getX()+1][lowerLeftCoordinates.getY()+1];
         for (int i = 0; i <= lowerLeftCoordinates.getX(); i++){

@@ -55,9 +55,7 @@ public class Mower {
     private Coordinates retrieveMowerCoordinates(String coordinatesAndOrientation){
         String[] strings = coordinatesAndOrientation.split(" ");
         int x=0, y=0;
-
-        /*If the number of elements is bigger than one defined in the constant
-           NUMBER_OF_COORDINATES, it means the input file is wrong.*/
+        
         if (strings.length > Constants.NUMBER_OF_COORDINATES) {
             try {
                 x = Integer.parseInt(strings[0]);
